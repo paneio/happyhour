@@ -1,21 +1,4 @@
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-           ______     ______     ______   __  __     __     ______
-          /\  == \   /\  __ \   /\__  _\ /\ \/ /    /\ \   /\__  _\
-          \ \  __<   \ \ \/\ \  \/_/\ \/ \ \  _"-.  \ \ \  \/_/\ \/
-           \ \_____\  \ \_____\    \ \_\  \ \_\ \_\  \ \_\    \ \_\
-            \/_____/   \/_____/     \/_/   \/_/\/_/   \/_/     \/_/
-
-
-This is a sample Slack bot built with Botkit.
-
-This bot demonstrates many of the core features of Botkit:
-
-* Connect to Slack using the real time API
-* Receive messages based on "spoken" patterns
-* Reply to messages
-* Use the conversation system to ask questions
-* Use the built in storage system to store and retrieve information
-  for a user.
 
 # RUN THE BOT:
 
@@ -27,33 +10,7 @@ This bot demonstrates many of the core features of Botkit:
 
     token=<MY TOKEN> node slack_bot.js
 
-# USE THE BOT:
-
-  Find your bot inside Slack to send it a direct message.
-
-  Say: "Hello"
-
-  The bot will reply "Hello!"
-
-  Say: "who are you?"
-
-  The bot will tell you its name, where it running, and for how long.
-
-  Say: "Call me <nickname>"
-
-  Tell the bot your nickname. Now you are friends.
-
-  Say: "who am I?"
-
-  The bot will tell you your nickname, if it knows one for you.
-
-  Say: "shutdown"
-
-  The bot will ask if you are sure, and then shut itself down.
-
-  Make sure to invite your bot into other channels using /invite @<my bot>!
-
-# EXTEND THE BOT:
+# BUILT USING BOTKIT:
 
   Botkit has many features for building cool and useful bots!
 
@@ -110,7 +67,7 @@ function firstRunCheck(done) {
 
 function welcomeMessage(bot, message) {
 	bot.say({
-		text: 'Hi there! I\'m Happy Hour! A slack bot built to help you coordinate drinks with your associates.  Let\'s get started by setting up a few default local watering holes that will come up as options when you try to schedule happy hours!',
+		text: 'Hi there! I\'m Happy Hour! A slack bot built to help you coordinate drinks with friends.  Let\'s get started by setting up a few of your favorite watering holes for your to choose from!',
 		channel: message.channel
 	})
 	addBar(bot, message);
@@ -120,7 +77,7 @@ function addBar(bot, message) {
 	var bar = {};
 	askName = function (response, convo) {
 		convo.ask('What is the name of your bar?', function (response, convo) {
-			convo.say('I love that place.');
+			convo.say('I love that place!');
 			bar.name = response.text;
 			askLocation(response, convo);
 			convo.next();
@@ -140,7 +97,7 @@ function addBar(bot, message) {
 			{
 				pattern: bot.utterances.yes,
 				callback: function (response, convo) {
-					convo.say('Great! I will continue...');
+					convo.say('Great! Let me get a few more details...');
 					askWebsite(response, convo);
 					convo.next();
 
@@ -170,7 +127,7 @@ function addBar(bot, message) {
 			{
 				pattern: bot.utterances.no,
 				callback: function (response, convo) {
-					convo.say('Moving on...');
+					convo.say('Awesome. Almost done...');
 					bar.website = '';
 					askEnd(response, convo);
 					convo.next();
@@ -264,7 +221,7 @@ function setUpHappyHour(bot, message) {
 	})
 
 	askBar = function (response, convo) {
-		convo.ask('Let\'s get something planned! Choose the number of the bar you\'d like to go to?' + barOptions, [
+		convo.ask('Let\'s get our drink on! Choose the number of the bar you\'d like to go to?' + barOptions, [
 			{
 				pattern: '(\\d?\\d)',
 				callback: function (response, convo) {
@@ -288,7 +245,7 @@ function setUpHappyHour(bot, message) {
 
 	askTime = function (response, convo) {
 		convo.ask('What time were you thinking?', function (response, convo) {
-			convo.say('Drinks at ' + happyhour.location + ' at ' + response.text + ' sounds fun!');
+			convo.say('Drinks at ' + happyhour.location + ' at ' + response.text + ' sounds perfect!');
 			happyhour.time = response.text
 			askTimeConfirm(response, convo);
 			convo.next();
