@@ -2,4 +2,4 @@
 
 Built on the Botkit framework -- http://howdy.ai/botkit
 
-More details coming soon! 
+More details coming soon!
